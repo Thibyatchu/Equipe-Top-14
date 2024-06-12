@@ -4,7 +4,7 @@ public class Equipe
     /// <summary>
     /// Identifiant unique à l'équipe
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; set; } 
 
     /// <summary>
     /// Nom de l'équipe, peut retourner null en cas de non saisie
@@ -19,5 +19,5 @@ public class Equipe
     /// <summary>
     /// Liste des Joueurs présents dans cette équipe
     /// </summary>
-    public List<Joueur> Joueurs { get; set; } = new List<Joueur>();
+    public List<Joueur> Joueurs { get; set; }
 }
