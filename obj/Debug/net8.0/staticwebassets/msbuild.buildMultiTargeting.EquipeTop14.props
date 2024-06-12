@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EquipeTop14.props" />
+</Project>

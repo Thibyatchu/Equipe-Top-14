@@ -1,0 +1,95 @@
+@EquipeTop14_HostAddress = http://localhost:5119
+
+GET {{EquipeTop14_HostAddress}}/equipe/
+Accept: application/json
+
+###
+
+POST {{EquipeTop14_HostAddress}}/equipe/
+Content-Type: application/json
+
+{
+    "name": "",
+    "Ville": "",
+    "Joueurs": [
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        }
+    ]
+}
+
+###
+
+PUT {{EquipeTop14_HostAddress}}/equipe/5
+Content-Type: application/json
+
+{
+    "id": ,
+    "name": "",
+    "ville": "",
+    "Joueurs": [
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        },
+        {
+            "Id": ,
+            "Nom": "",
+            "Position": "",
+            "Numéro": 
+        }
+    ]
+}
+
+###
+
+DELETE {{EquipeTop14_HostAddress}}/equipe/5
+
+###
