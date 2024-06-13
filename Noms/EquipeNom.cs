@@ -5,24 +5,24 @@ namespace EquipeTop14.Noms
 {
     public static class EquipeNom
     {
-        private static readonly string FilePath = "equipes.json";
+        private static readonly string FilePathEquipes = "equipes.json";
         private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);
 
         public static async Task<List<Equipe>> GetAllAsync()
         {
-            if (!File.Exists(FilePath))
+            if (!File.Exists(FilePathEquipes))
             {
                 return new List<Equipe>();
             }
 
-            var json = await File.ReadAllTextAsync(FilePath);
+            var json = await File.ReadAllTextAsync(FilePathEquipes);
             return JsonSerializer.Deserialize<List<Equipe>>(json);
         }
 
         public static async Task SaveAllAsync(List<Equipe> equipes)
         {
             var json = JsonSerializer.Serialize(equipes, new JsonSerializerOptions { WriteIndented = true });
-            await File.WriteAllTextAsync(FilePath, json);
+            await File.WriteAllTextAsync(FilePathEquipes, json);
         }
 
         public static async Task AddEquipeAsync(Equipe equipe)

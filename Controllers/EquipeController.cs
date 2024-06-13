@@ -1,17 +1,19 @@
 using EquipeTop14.Models;
 using EquipeTop14.Noms;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using Microsoft.AspNetCore.JsonPatch;
 
 
 namespace EquipeTop14.Controllers;
+
 
 [ApiController]
 [Route("[controller]")]
 [ProducesResponseType(typeof(List<Equipe>), StatusCodes.Status200OK)]
 [Produces(MediaTypeNames.Application.Json)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
+[Authorize]
 public class EquipeController : ControllerBase
 {
     /// <summary>
