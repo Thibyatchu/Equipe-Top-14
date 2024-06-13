@@ -27,13 +27,15 @@ public class EquipeController : ControllerBase
     /// La méthode affiche une seule équipe selon l'Id écrit
     /// </summary>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Equipe>> Get(int id)
+    public async Task<IActionResult> Get(int id)
     {
         var equipes = await EquipeNom.GetAllAsync();
         var equipe = equipes.FirstOrDefault(e => e.Id == id);
 
         if (equipe == null)
+        {
             return NotFound();
+        }
 
         return Ok(equipe);
     }
@@ -44,10 +46,7 @@ public class EquipeController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Equipe equipe)
     {
-        var equipes = await EquipeNom.GetAllAsync();
-        equipe.Id = equipes.Any() ? equipes.Max(e => e.Id) + 1 : 1;
-        equipes.Add(equipe);
-        await EquipeNom.SaveAllAsync(equipes);
+        await EquipeNom.AddEquipeAsync(equipe);
         return CreatedAtAction(nameof(Get), new { id = equipe.Id }, equipe);
     }
     /// <summary>
@@ -76,13 +75,12 @@ public class EquipeController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var equipes = await EquipeNom.GetAllAsync();
-        var index = equipes.FindIndex(e => e.Id == id);
-        if (index == -1)
-            return NotFound();
+        var result = await EquipeNom.DeleteEquipeAsync(id);
 
-        equipes.RemoveAt(index);
-        await EquipeNom.SaveAllAsync(equipes);
+        if (!result)
+        {
+            return NotFound();
+        }
         return NoContent();
     }
     /// <summary>
@@ -105,7 +103,7 @@ public class EquipeController : ControllerBase
     /// <summary>
     /// Ajoute un joueur à une équipe spécifiée par son Id.
     /// </summary>
-    [HttpPost("{id}/joueurs/{joueurId}")]
+    [HttpPost("{id}/joueurs")]
     public async Task<IActionResult> AddPlayer(int id, [FromBody] Joueur joueur)
     {
         var equipes = await EquipeNom.GetAllAsync();
@@ -159,11 +157,18 @@ public class EquipeController : ControllerBase
         if (equipe == null)
             return NotFound();
 
-        var index = equipe.Joueurs.FindIndex(j => j.Id == joueurId);
-        if (index == -1)
+        var joueur = equipe.Joueurs.FirstOrDefault(j => j.Id == joueurId);
+        if (joueur == null)
             return NotFound();
 
-        equipe.Joueurs.RemoveAt(index);
+        equipe.Joueurs.Remove(joueur);
+
+        // Réaffecter les IDs des joueurs restants
+        for (int i = 0; i < equipe.Joueurs.Count; i++)
+        {
+            equipe.Joueurs[i].Id = i + 1;
+        }
+
         await EquipeNom.SaveAllAsync(equipes);
         return NoContent();
     }
