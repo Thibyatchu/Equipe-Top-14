@@ -1,6 +1,4 @@
 using EquipeTop14.Models;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 
 namespace EquipeTop14.Noms
