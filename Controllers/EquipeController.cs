@@ -2,10 +2,11 @@ using EquipeTop14.Models;
 using EquipeTop14.Noms;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace EquipeTop14.Controllers;
+
 
 [ApiController]
 [Route("[controller]")]

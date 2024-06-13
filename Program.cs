@@ -1,9 +1,5 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.AspNetCore.Authentication;
 
-// Ajouter des services au conteneur
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 var builder = WebApplication.CreateBuilder(args);
 
 // Ajouter des services au conteneur
@@ -12,8 +8,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Ajouter l'authentification basée sur le fichier JSON
-builder.Services.AddAuthentication("JsonAuth")
-    .AddScheme<AuthenticationSchemeOptions, JsonAuthenticationHandler>("JsonAuth", null);
 
 var app = builder.Build();
 
@@ -40,5 +34,3 @@ app.UseSwaggerUI(c =>
 });
 
 app.Run();
-
-
