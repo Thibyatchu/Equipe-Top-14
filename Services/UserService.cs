@@ -1,4 +1,4 @@
-using EquipeTop14.Models;
+using EquipeTop14.Service;
 
 public class UserService : IUserService
 {

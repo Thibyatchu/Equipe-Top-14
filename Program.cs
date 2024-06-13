@@ -1,4 +1,4 @@
-using EquipeTop14.Models;
+using EquipeTop14.Service;
 using EquipeTop14.Authentication;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication;

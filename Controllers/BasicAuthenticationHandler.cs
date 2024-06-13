@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using EquipeTop14.Models;
+using EquipeTop14.Service;
 using System.Net.Http.Headers;
 
 
