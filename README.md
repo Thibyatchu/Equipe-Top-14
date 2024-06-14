@@ -9,4 +9,5 @@ Version 1.0.1
         - Les joueurs.
 
 Version 1.0.2
+
     Ajout gestion par authentification
