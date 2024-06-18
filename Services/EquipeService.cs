@@ -1,9 +1,9 @@
 using EquipeTop14.Models;
 using System.Text.Json;
 
-namespace EquipeTop14.Methode
+namespace EquipeTop14.EquipeService
 {
-    public static class Methodes
+    public static class EquipeServices
     {
         private static readonly string FilePathEquipes = "equipes.json";
         private static readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1, 1);

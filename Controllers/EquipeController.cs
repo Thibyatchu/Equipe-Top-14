@@ -1,5 +1,5 @@
 using EquipeTop14.Models;
-using EquipeTop14.Methode;
+using EquipeTop14.EquipeService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
@@ -7,22 +7,24 @@ using System.Net.Mime;
 
 namespace EquipeTop14.Controllers;
 
-
+[Authorize]
 [ApiController]
 [Route("[controller]")]
-[ProducesResponseType(typeof(List<Equipe>), StatusCodes.Status200OK)]
-[Produces(MediaTypeNames.Application.Json)]
-[ProducesResponseType(StatusCodes.Status400BadRequest)]
-[Authorize]
 public class EquipeController : ControllerBase
 {
+    private readonly ILogger<EquipeController> _logger;
+
+    public EquipeController(ILogger<EquipeController> logger)
+    {
+        _logger = logger;
+    }
     /// <summary>
     /// C'est la méthode utilisée pour afficher toutes les listes
     /// </summary>
     [HttpGet]
     public async Task<ActionResult<List<Equipe>>> GetAll()
     {
-        var equipes = await Methodes.GetAllAsync();
+        var equipes = await EquipeServices.GetAllAsync();
         return Ok(equipes);
     }
     /// <summary>
@@ -31,7 +33,7 @@ public class EquipeController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var equipes = await Methodes.GetAllAsync();
+        var equipes = await EquipeServices.GetAllAsync();
         var equipe = equipes.FirstOrDefault(e => e.Id == id);
 
         if (equipe == null)
@@ -48,7 +50,7 @@ public class EquipeController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(Equipe equipe)
     {
-        await Methodes.AddEquipeAsync(equipe);
+        await EquipeServices.AddEquipeAsync(equipe);
         return CreatedAtAction(nameof(Get), new { id = equipe.Id }, equipe);
     }
     /// <summary>
@@ -61,13 +63,13 @@ public class EquipeController : ControllerBase
         if (id != equipe.Id)
             return BadRequest();
 
-        var equipes = await Methodes.GetAllAsync();
+        var equipes = await EquipeServices.GetAllAsync();
         var index = equipes.FindIndex(e => e.Id == id);
         if (index == -1)
             return NotFound();
 
         equipes[index] = equipe;
-        await Methodes.SaveAllAsync(equipes);
+        await EquipeServices.SaveAllAsync(equipes);
         return NoContent();
     }
     /// <summary>
@@ -77,7 +79,7 @@ public class EquipeController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await Methodes.DeleteEquipeAsync(id);
+        var result = await EquipeServices.DeleteEquipeAsync(id);
 
         if (!result)
         {
@@ -91,7 +93,7 @@ public class EquipeController : ControllerBase
     [HttpGet("{id}/joueurs/{joueurId}")]
     public async Task<ActionResult<Joueur>> GetPlayer(int id, int joueurId)
     {
-        var equipes = await Methodes.GetAllAsync();
+        var equipes = await EquipeServices.GetAllAsync();
         var equipe = equipes.FirstOrDefault(e => e.Id == id);
         if (equipe == null)
             return NotFound();
@@ -108,7 +110,7 @@ public class EquipeController : ControllerBase
     [HttpPost("{id}/joueurs")]
     public async Task<IActionResult> AddPlayer(int id, [FromBody] Joueur joueur)
     {
-        var equipes = await Methodes.GetAllAsync();
+        var equipes = await EquipeServices.GetAllAsync();
         var equipe = equipes.FirstOrDefault(e => e.Id == id);
 
         if (equipe == null)
@@ -119,7 +121,7 @@ public class EquipeController : ControllerBase
         equipe.Joueurs.Add(joueur);
 
         // Sauvegarder les modifications
-        await Methodes.SaveAllAsync(equipes);
+        await EquipeServices.SaveAllAsync(equipes);
 
         // Retourner l'équipe mise à jour
         return Ok(equipe);
@@ -134,7 +136,7 @@ public class EquipeController : ControllerBase
         if (joueurId != joueur.Id)
             return BadRequest();
 
-        var equipes = await Methodes.GetAllAsync();
+        var equipes = await EquipeServices.GetAllAsync();
         var equipe = equipes.FirstOrDefault(e => e.Id == id);
         if (equipe == null)
             return NotFound();
@@ -144,7 +146,7 @@ public class EquipeController : ControllerBase
             return NotFound();
 
         equipe.Joueurs[index] = joueur;
-        await Methodes.SaveAllAsync(equipes);
+        await EquipeServices.SaveAllAsync(equipes);
         return NoContent();
     }
 
@@ -154,7 +156,7 @@ public class EquipeController : ControllerBase
     [HttpDelete("{id}/joueurs/{joueurId}")]
     public async Task<IActionResult> DeletePlayer(int id, int joueurId)
     {
-        var equipes = await Methodes.GetAllAsync();
+        var equipes = await EquipeServices.GetAllAsync();
         var equipe = equipes.FirstOrDefault(e => e.Id == id);
         if (equipe == null)
             return NotFound();
@@ -171,7 +173,7 @@ public class EquipeController : ControllerBase
             equipe.Joueurs[i].Id = i + 1;
         }
 
-        await Methodes.SaveAllAsync(equipes);
+        await EquipeServices.SaveAllAsync(equipes);
         return NoContent();
     }
 }

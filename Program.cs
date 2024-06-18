@@ -1,82 +1,119 @@
-using EquipeTop14.Service;
-using EquipeTop14.Authentication;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllers();
+builder.Services.AddSingleton<IAdminService, AdminService>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options => 
 {
-    public static void Main(string[] args)
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
-        var builder = WebApplication.CreateBuilder(args);
+        Version = "v1",
+        Title = "Mon API",
+        Description = "API pour la gestion des administrateurs",
+        TermsOfService = new Uri("https://example.com/terms"),
+    });
 
-        // Ajouter des services au conteneur
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(c =>
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        In = ParameterLocation.Header,
+        Description = "Insérer le token JWT précédé de \"Bearer\"",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Top 14", Version = "v1" });
-
-            // Définir le schéma d'authentification de base pour Swagger
-            c.AddSecurityDefinition("BasicAuthentication", new OpenApiSecurityScheme
+            new OpenApiSecurityScheme
             {
-                Type = SecuritySchemeType.Http,
-                Scheme = "basic",
-                Description = "Utilisation de l'authentification de base."
-            });
-
-            // Ajouter le schéma d'authentification requis à Swagger
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
+                Reference = new OpenApiReference()
                 {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "BasicAuthentication"
-                        }
-                    },
-                    Array.Empty<string>()
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
                 }
-            });
-        });
-
-        // Ajouter le service UserService
-        builder.Services.AddSingleton<IUserService, UserService>();
-
-        builder.Services.AddAuthentication("BasicAuthentication")
-            .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-
-        var app = builder.Build();
-
-        // Configurer le pipeline HTTP
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
+            },
+            new string[] { }
         }
+    });
+});
 
-        app.UseHttpsRedirection();
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var secretKey = jwtSettings["Key"];
+var issuer = jwtSettings["Issuer"];
+var audience = jwtSettings["Audience"];
 
-        // Activer l'authentification
-        app.UseAuthentication();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-
-        // Activer Swagger et Swagger UI
-        app.UseSwagger();
-        app.UseSwaggerUI(c =>
-        {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Top 14");
-            // Spécifier que Swagger doit utiliser l'authentification de base
-            c.DisplayOperationId();
-            c.DisplayRequestDuration();
-        });
-
-        app.Run();
-    }
+if (string.IsNullOrEmpty(secretKey))
+{
+    throw new ArgumentNullException(nameof(secretKey), "JWT secret key is not configured.");
+}
+if (string.IsNullOrEmpty(issuer))
+{
+    throw new ArgumentNullException(nameof(issuer), "JWT issuer is not configured.");
+}
+if (string.IsNullOrEmpty(audience))
+{
+    throw new ArgumentNullException(nameof(audience), "JWT audience is not configured.");
 }
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        ClockSkew = TimeSpan.Zero 
+    };
 
+    options.Events = new JwtBearerEvents
+    {
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine("Authentication failed: " + context.Exception.Message);
+            return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            Console.WriteLine("Token validated: " + context.SecurityToken);
+            return Task.CompletedTask;
+        }
+    };
+});
 
+builder.Services.AddAuthorization();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

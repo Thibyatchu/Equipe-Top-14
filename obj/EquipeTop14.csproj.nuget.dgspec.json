@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {}
+    "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {}
   },
   "projects": {
-    "D:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {
+    "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
+        "projectUniqueName": "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
         "projectName": "EquipeTop14",
-        "projectPath": "D:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
+        "projectPath": "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Stage\\Progra\\Projet4\\EquipeTop14\\obj\\",
+        "outputPath": "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -43,6 +43,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.6, )"
+            },
             "Microsoft.AspNetCore.JsonPatch": {
               "target": "Package",
               "version": "[8.0.6, )"
