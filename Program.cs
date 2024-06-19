@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configurer les URL d'écoute
+builder.WebHost.UseUrls("http://localhost:5119", "https://localhost:7162");
+
+// Ajouter des services au conteneur.
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IAdminService, AdminService>();
 
@@ -15,7 +18,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Mon API",
+        Title = "Equipe Top 14",
         Description = "API pour la gestion des administrateurs",
         TermsOfService = new Uri("https://example.com/terms"),
     });
