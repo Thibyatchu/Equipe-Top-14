@@ -55,7 +55,7 @@ namespace EquipeTop14.Controllers
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
                 notBefore: DateTime.UtcNow,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: DateTime.UtcNow.AddHours(3),
                 signingCredentials: credentials
             );
 
