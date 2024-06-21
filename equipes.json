@@ -140,18 +140,5 @@
         "Numero": 8
       }
     ]
-  },
-  {
-    "Id": 5,
-    "Name": "ASM",
-    "Ville": "Clermont",
-    "Joueurs": [
-      {
-        "Id": 0,
-        "Nom": "string",
-        "Position": "string",
-        "Numero": 0
-      }
-    ]
   }
 ]
