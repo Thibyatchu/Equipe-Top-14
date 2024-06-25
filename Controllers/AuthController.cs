@@ -73,12 +73,12 @@ namespace EquipeTop14.Controllers
             {
                 var createdAdmin = _adminService.CreateAdmin(admin);
                 _logger.LogInformation($"Administrateur {admin.Username} créé avec succès.");
-                return CreatedAtRoute("GetAdmin", new { username = createdAdmin.Username }, createdAdmin);
+                return NoContent();
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
-                _logger.LogError($"Erreur lors de la création de l'administrateur : {ex.Message}");
-                return BadRequest(ex.Message);
+                _logger.LogError($"An error occurred while creating an admin: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
     }

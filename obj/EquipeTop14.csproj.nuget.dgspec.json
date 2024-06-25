@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {}
+    "e:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {}
   },
   "projects": {
-    "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {
+    "e:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
+        "projectUniqueName": "e:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
         "projectName": "EquipeTop14",
-        "projectPath": "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
+        "projectPath": "e:\\Stage\\Progra\\Projet4\\EquipeTop14\\EquipeTop14.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "E:\\Stage\\Progra\\Projet4\\EquipeTop14\\obj\\",
+        "outputPath": "e:\\Stage\\Progra\\Projet4\\EquipeTop14\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
