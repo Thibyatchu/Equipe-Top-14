@@ -140,5 +140,11 @@
         "Numero": 8
       }
     ]
+  },
+  {
+    "Id": 5,
+    "Name": "Stade-Fran\u00E7ais",
+    "Ville": "Paris",
+    "Joueurs": []
   }
 ]

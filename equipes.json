@@ -140,5 +140,24 @@
         "Numero": 8
       }
     ]
+  },
+  {
+    "Id": 5,
+    "Name": "Stade-Fran\u00E7ais",
+    "Ville": "Paris",
+    "Joueurs": [
+      {
+        "Id": 1,
+        "Nom": "Marc",
+        "Position": "Pilier",
+        "Numero": 1
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "Name": "Aviron Bayonnais",
+    "Ville": "Bayonne",
+    "Joueurs": []
   }
 ]
