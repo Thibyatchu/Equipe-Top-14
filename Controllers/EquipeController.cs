@@ -130,25 +130,36 @@ public class EquipeController : ControllerBase
     /// <summary>
     /// Met à jour un joueur d'une équipe spécifiée par son Id.
     /// </summary>
-    [HttpPut("{id}/joueurs/{joueurId}")]
-    public async Task<IActionResult> UpdatePlayer(int id, int joueurId, Joueur joueur)
+[HttpPut("{id}/joueurs/{joueurId}")]
+public async Task<IActionResult> UpdatePlayer(int id, int joueurId, Joueur joueur)
+{
+    if (joueurId != joueur.Id)
     {
-        if (joueurId != joueur.Id)
-            return BadRequest();
-
-        var equipes = await EquipeServices.GetAllAsync();
-        var equipe = equipes.FirstOrDefault(e => e.Id == id);
-        if (equipe == null)
-            return NotFound();
-
-        var index = equipe.Joueurs.FindIndex(j => j.Id == joueurId);
-        if (index == -1)
-            return NotFound();
-
-        equipe.Joueurs[index] = joueur;
-        await EquipeServices.SaveAllAsync(equipes);
-        return NoContent();
+        Console.WriteLine("ID mismatch: joueurId != joueur.Id");
+        return BadRequest("ID mismatch.");
     }
+
+    var equipes = await EquipeServices.GetAllAsync();
+    var equipe = equipes.FirstOrDefault(e => e.Id == id);
+    if (equipe == null)
+    {
+        Console.WriteLine($"Equipe not found: {id}");
+        return NotFound("Equipe not found.");
+    }
+
+    var index = equipe.Joueurs.FindIndex(j => j.Id == joueurId);
+    if (index == -1)
+    {
+        Console.WriteLine($"Player not found: {joueurId}");
+        return NotFound("Player not found.");
+    }
+
+    equipe.Joueurs[index] = joueur;
+    await EquipeServices.SaveAllAsync(equipes);
+    Console.WriteLine($"Player updated: {joueurId}");
+    return NoContent();
+}
+
 
     /// <summary>
     /// Supprime un joueur d'une équipe spécifiée par son Id.

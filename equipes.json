@@ -148,16 +148,16 @@
     "Joueurs": [
       {
         "Id": 1,
-        "Nom": "Marc",
-        "Position": "Pilier",
-        "Numero": 1
+        "Nom": "Jean",
+        "Position": "Talonneur",
+        "Numero": 2
       }
     ]
   },
   {
     "Id": 6,
-    "Name": "Aviron Bayonnais",
-    "Ville": "Bayonne",
+    "Name": "RCV",
+    "Ville": "Toulon",
     "Joueurs": []
   }
 ]
