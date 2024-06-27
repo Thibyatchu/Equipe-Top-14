@@ -13,7 +13,7 @@
       {
         "Id": 2,
         "Nom": "Romain Ntamack",
-        "Position": "Demi douverture",
+        "Position": "Demi d\u0027ouverture",
         "Numero": 10
       },
       {
@@ -44,7 +44,7 @@
       {
         "Id": 2,
         "Nom": "Matthieu Jalibert",
-        "Position": "Demi douverture",
+        "Position": "Demi d\u0027ouverture",
         "Numero": 10
       },
       {
@@ -56,7 +56,7 @@
       {
         "Id": 4,
         "Nom": "Cameron Woki",
-        "Position": "Troisi\u00E8me ligne aile",
+        "Position": "Troisi\u00E8me ligne",
         "Numero": 6
       },
       {
@@ -75,7 +75,7 @@
       {
         "Id": 1,
         "Nom": "Gr\u00E9gory Alldritt",
-        "Position": "Troisi\u00E8me ligne centre",
+        "Position": "Troisi\u00E8me ligne",
         "Numero": 8
       },
       {
@@ -99,7 +99,7 @@
       {
         "Id": 5,
         "Nom": "Jules Plisson",
-        "Position": "Demi douverture",
+        "Position": "Demi d\u0027ouverture",
         "Numero": 10
       }
     ]
@@ -112,7 +112,7 @@
       {
         "Id": 1,
         "Nom": "Finn Russel",
-        "Position": "Demi douverture",
+        "Position": "Demi d\u0027ouverture",
         "Numero": 10
       },
       {
@@ -136,7 +136,7 @@
       {
         "Id": 5,
         "Nom": "Yoan Tanga",
-        "Position": "Troisi\u00E8me ligne centre",
+        "Position": "Troisi\u00E8me ligne",
         "Numero": 8
       }
     ]
